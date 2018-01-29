@@ -48,7 +48,6 @@ RUN set -xe; \
 	apk add --no-cache --virtual .fetch-deps \
 		gnupg \
 	; \
-	chmod 777 docker-php* \
 	mkdir -p /usr/src; \
 	cd /usr/src; \
 	\
@@ -74,6 +73,7 @@ RUN set -xe; \
 	apk del .fetch-deps
 
 COPY docker-php-source /usr/local/bin/
+COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/
 
 RUN set -xe \
 	&& apk add --no-cache --virtual .build-deps \
@@ -88,6 +88,7 @@ RUN set -xe \
 	&& export CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
 		LDFLAGS="$PHP_LDFLAGS" \
+	&& chmod 777 /usr/local/bin/docker-php-* \
 	&& docker-php-source extract \
 	&& cd /usr/src/php \
 	&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
@@ -128,8 +129,6 @@ RUN set -xe \
 
 	&& pecl update-channels \
 	&& rm -rf /tmp/pear ~/.pearrc
-
-COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/
 
 ENTRYPOINT ["docker-php-entrypoint"]
 WORKDIR /data
