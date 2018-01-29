@@ -48,7 +48,7 @@ RUN set -xe; \
 	apk add --no-cache --virtual .fetch-deps \
 		gnupg \
 	; \
-	\
+	chmod 777 docker-php* \
 	mkdir -p /usr/src; \
 	cd /usr/src; \
 	\
