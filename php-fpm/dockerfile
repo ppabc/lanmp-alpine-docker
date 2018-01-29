@@ -76,7 +76,8 @@ RUN set -xe; \
 COPY docker-php-source /usr/local/bin/
 COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/
 
-RUN set -xe \
+RUN chmod 777 /usr/local/bin/docker-php-* \
+	&& set -xe \
 	&& apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		coreutils \
@@ -85,8 +86,6 @@ RUN set -xe \
 		openssl-dev \
 		libxml2-dev \
 		sqlite-dev \
-	\
-	&& chmod 777 /usr/local/bin/docker-php-* \
 	\
 	&& export CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
