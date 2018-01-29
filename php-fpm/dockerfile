@@ -48,6 +48,7 @@ RUN set -xe; \
 	apk add --no-cache --virtual .fetch-deps \
 		gnupg \
 	; \
+	\
 	mkdir -p /usr/src; \
 	cd /usr/src; \
 	\
