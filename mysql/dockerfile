@@ -9,7 +9,8 @@ RUN set -x \
 	&& adduser -u 82 -D -S -G mysql mysql \
 	&& chown -R root:mysql /data/mysql \
 	&& chown -R root:mysql /run/mysqld \
-	&& chmod 777 /tmp startup.sh
+	&& chmod 777 startup.sh \
+	&& chmod 777 /tmp
 	
 WORKDIR /data
 VOLUME /data
