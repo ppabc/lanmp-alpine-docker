@@ -108,6 +108,7 @@ RUN chmod 777 /usr/local/bin/docker-php-* \
 		--with-libedit \
 		--with-openssl \
 		--with-zlib \
+		--with-gd \
 		--with-pcre-regex=/usr \
 		$PHP_EXTRA_CONFIGURE_ARGS \
 	&& make -j "$(nproc)" \
