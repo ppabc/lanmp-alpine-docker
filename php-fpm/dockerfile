@@ -22,8 +22,6 @@ RUN apk add --no-cache --virtual .persistent-deps \
 		libmcrypt \
 		libmcrypt-dev \
 		xz \
-		gd \
-		gd-dev \
 		openssl
 
 
@@ -88,6 +86,8 @@ RUN chmod 777 /usr/local/bin/docker-php-* \
 		openssl-dev \
 		libxml2-dev \
 		sqlite-dev \
+		gd \
+		gd-dev \
 	\
 	&& export CFLAGS="$PHP_CFLAGS" \
 		CPPFLAGS="$PHP_CPPFLAGS" \
