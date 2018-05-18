@@ -1,5 +1,9 @@
 #!/bin/sh
 
+  MYSQL_DATABASE=${MYSQL_DATABASE:-""}
+  MYSQL_USER=${MYSQL_USER:-""}
+  MYSQL_PASSWORD=${MYSQL_PASSWORD:-""}
+
 if [ -d /data/mysql ]; then
   echo "[i] MySQL directory already present, skipping creation"
 else
@@ -12,10 +16,6 @@ else
     MYSQL_ROOT_PASSWORD=111111
     echo "[i] MySQL root Password: $MYSQL_ROOT_PASSWORD"
   fi
-
-  MYSQL_DATABASE=${MYSQL_DATABASE:-""}
-  MYSQL_USER=${MYSQL_USER:-""}
-  MYSQL_PASSWORD=${MYSQL_PASSWORD:-""}
 
   if [ ! -d "/run/mysqld" ]; then
     mkdir -p /run/mysqld
@@ -30,9 +30,10 @@ else
   cat << EOF > $tfile
 USE mysql;
 FLUSH PRIVILEGES;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY "$MYSQL_ROOT_PASSWORD" WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'127.0.0.1' IDENTIFIED BY "$MYSQL_ROOT_PASSWORD" WITH GRANT OPTION;
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
 UPDATE user SET password=PASSWORD("$MYSQL_ROOT_PASSWORD") WHERE user='root' AND host='localhost';
+UPDATE user SET password=PASSWORD("$MYSQL_ROOT_PASSWORD") WHERE user='root' AND host='127.0.0.1';
 EOF
 
   if [ "$MYSQL_DATABASE" != "" ]; then
